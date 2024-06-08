@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil</title>
+    <link rel="stylesheet" href="styles1@&.css">
+    <!-- Ajouté pour les styles de l'éditeur -->
+</head>
+<body>
+    <nav>
+        <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Coz_logo.png" alt="Logo du site">
+        <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+        <ul id="menu">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="Chtml.html">𝘾𝙤𝙙𝙚𝙕 Html</a></li>
+            <li><a href="Cjs.html">𝘾𝙤𝙙𝙚𝙕 Js in progress</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    <header>
+        <h1>𝘾𝙤𝙙𝙚𝙕</h1>
+        <h4>-Accueil-</h4>
+    </header>
+    <main>
+        <section>
+            <h2>Bienvenue sur la page d'accueil</h2>
+            <p>Bienvenue sur notre site de développement de codage. Explorez nos ressources et apprenez à coder avec nos tutoriels et guides.</p>
+        </section>
+
+        <!-- Section de l'éditeur CodePen -->
+        <section class="editor">
+            <div class="editor-section html">
+                <div class="editor-title">HTML</div>
+                <pre><code>&lt;div class="rect"&gt;&lt;/div&gt;</code></pre>
+            </div>
+            <div class="editor-section scss">
+                <div class="editor-title">SCSS</div>
+                <pre><code>.rect {}</code></pre>
+            </div>
+            <div class="editor-section js">
+                <div class="editor-title">JS</div>
+                <pre><code>var colors = ["#74B087", "#DE7300"];<br>function animate() {};</code></pre>
+            </div>
+        </section>
+<br>
+<hr>
+
+          <!-- Carrousel d'images -->
+<section class="carousel">
+    <div class="carousel-container">
+        <div class="carousel-slide">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/JavaScript_screenshot.png" alt="Image 1">
+        </div>
+        <div class="carousel-slide">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bf/Front-end-logo-color%402x.png" alt="Image 2">
+        </div>
+        <div class="carousel-slide">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" alt="Image 3">
+        </div>
+    </div>
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+</section>
+
+<script>
+    // Carrousel
+    const carousel = document.querySelector('.carousel-container');
+    const slides = document.querySelectorAll('.carousel-slide');
+    const prevButton = document.querySelector('.prev');
+    const nextButton = document.querySelector('.next');
+    let currentIndex = 0;
+    const slideInterval = 3000; // Intervalle de temps en millisecondes
+
+    function showSlide(index) {
+        if (index >= slides.length) {
+            currentIndex = 0;
+        } else if (index < 0) {
+            currentIndex = slides.length - 1;
+        } else {
+            currentIndex = index;
+        }
+        const offset = -currentIndex * 100;
+        carousel.style.transform = 'translateX(' + offset + '%)';
+    }
+
+    prevButton.addEventListener('click', function() {
+        showSlide(currentIndex - 1);
+    });
+
+    nextButton.addEventListener('click', function() {
+        showSlide(currentIndex + 1);
+    });
+
+    // Fonction pour automatiser le défilement
+    function autoSlide() {
+        showSlide(currentIndex + 1);
+    }
+
+    // Démarrer l'intervalle de défilement automatique
+    let autoSlideInterval = setInterval(autoSlide, slideInterval);
+
+    // Arrêter le défilement automatique lorsque la souris est sur le carrousel
+    document.querySelector('.carousel').addEventListener('mouseover', function() {
+        clearInterval(autoSlideInterval);
+    });
+
+    // Reprendre le défilement automatique lorsque la souris quitte le carrousel
+    document.querySelector('.carousel').addEventListener('mouseout', function() {
+        autoSlideInterval = setInterval(autoSlide, slideInterval);
+    });
+
+    showSlide(currentIndex);
+</script>
+    </section>
+    </main>
+    <footer>
+        <p>Copyright © 2024 par Zulkif Varol - 2024</p>
+    </footer>
+    <div class="cookie-banner" id="cookie-banner">
+        <p>Nous utilisons des cookies pour améliorer votre expérience.Pour plus d'info:<a href="priver.html">PrivacyPolicy</a><button id="accept-cookies">Accepter</button></p>
+    </div>
+
+    <!-- Chatbot button -->
+    <button class="chat-button" id="chat-button">🤖</button>
+
+    <!-- Chatbot container -->
+    <div class="chat-container" id="chat-container">
+        <div class="chat-header">
+            Chatbot IA
+            <span class="close-chat" id="close-chat">&times;</span>
+        </div>
+        <div class="chat-messages" id="chat-messages"></div>
+        <input type="text" class="chat-input" id="chat-input" placeholder="Tapez un message..." onkeypress="handleKeyPress(event)">
+    </div>
+
+    <script src="script.js"></script> <!-- Ajouté pour le JavaScript de l'éditeur -->
+    <script>
+        const chatButton = document.getElementById('chat-button');
+        const chatContainer = document.getElementById('chat-container');
+        const messagesContainer = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const closeChat = document.getElementById('close-chat');
+
+        chatButton.addEventListener('click', () => {
+            chatContainer.style.display = chatContainer.style.display === 'none' ? 'flex' : 'none';
+        });
+
+        closeChat.addEventListener('click', () => {
+            chatContainer.style.display = 'none';
+        });
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                const userInput = chatInput.value;
+                addMessage('User', userInput);
+                chatInput.value = '';
+                getBotResponse(userInput);
+            }
+        }
+
+        function addMessage(sender, message) {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = `${sender}: ${message}`;
+            messagesContainer.appendChild(messageElement);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function getBotResponse(userInput) {
+            let botResponse = 'Je suis désolé, je ne comprends pas.';
+
+            if (userInput.toLowerCase().includes('bonjour')) {
+                botResponse = 'Bonjour! Comment puis-je vous aider avec le codage aujourd\'hui?';
+            } else if (userInput.toLowerCase().includes('<html>')) {
+                botResponse = '<html> est une balise de base en HTML qui représente la racine d\'un document HTML.';
+            } else if (userInput.toLowerCase().includes('<head>')) {
+                botResponse = '<head> est une balise en HTML qui contient des méta-informations sur le document, comme le titre, les liens vers les feuilles de style, etc.';
+            } else if (userInput.toLowerCase().includes('<body>')) {
+                botResponse = '<body> est une balise en HTML qui contient le contenu principal du document, comme le texte, les images, les vidéos, etc.';
+            } else if (userInput.toLowerCase().includes('<div>')) {
+                botResponse = '<div> est une balise en HTML utilisée pour créer des divisions ou des sections dans un document. Elle est couramment utilisée pour organiser le contenu et appliquer des styles CSS.';
+            } else if (userInput.toLowerCase().includes('css')) {
+                botResponse = 'CSS (Cascading Style Sheets) est utilisé pour décrire la présentation des documents HTML, y compris les couleurs, les mises en page, et les polices.';
+            } else if (userInput.toLowerCase().includes('comment créer un site web')) {
+                botResponse = 'Pour créer un site web, vous avez besoin de connaître HTML pour la structure, CSS pour la présentation, et JavaScript pour l\'interaction.';
+            } else if (userInput.toLowerCase().includes('javascript')) {
+                botResponse = 'JavaScript est un langage de programmation qui permet de rendre les pages web interactives. Il peut être utilisé pour créer des animations, valider des formulaires, et bien plus encore.';
+            } else if (userInput.toLowerCase().includes('var et let en javascript')) {
+                botResponse = 'En JavaScript, var et let sont utilisés pour déclarer des variables. var est fonctionnellement portée tandis que let est block-scoped.';
+            } else if (userInput.toLowerCase().includes('const en javascript')) {
+                botResponse = 'const est utilisé pour déclarer des constantes en JavaScript. Une fois assignée, la valeur d\'une constante ne peut pas être modifiée.';
+            } else if (userInput.toLowerCase().includes('fonction en javascript')) {
+                botResponse = 'Une fonction en JavaScript est un bloc de code conçu pour effectuer une tâche particulière. Elle est définie avec le mot-clé function suivi par un nom, une liste de paramètres entre parenthèses, et un bloc de code entre accolades.';
+            } else if (userInput.toLowerCase().includes('comment inclure une feuille de style css')) {
+                botResponse = 'Pour inclure une feuille de style CSS dans votre document HTML, utilisez la balise <link> dans la section <head> comme ceci : <link rel="stylesheet" href="style.css">';
+            } else if (userInput.toLowerCase().includes('comment ajouter une image en html')) {
+                botResponse = 'Pour ajouter une image en HTML, utilisez la balise <img> avec l\'attribut src pour spécifier le chemin de l\'image, comme ceci : <img src="image.jpg" alt="Description de l\'image">';
+            } else if (userInput.toLowerCase().includes('comment créer un lien en html')) {
+                botResponse = 'Pour créer un lien en HTML, utilisez la balise <a> avec l\'attribut href pour spécifier l\'URL du lien, comme ceci : <a href="https://www.example.com">Cliquez ici</a>';
+            } else if (userInput.toLowerCase().includes('comment créer un bouton en html')) {
+                botResponse = 'Pour créer un bouton en HTML, utilisez la balise <button> comme ceci : <button>Cliquer</button>';
+            } else if (userInput.toLowerCase().includes('comment créer une liste en html')) {
+                botResponse = 'Pour créer une liste en HTML, utilisez la balise <ul> pour une liste non ordonnée ou <ol> pour une liste ordonnée, et utilisez <li> pour chaque élément de la liste, comme ceci : <ul><li>Élément 1</li><li>Élément 2</li></ul>';
+            } else if (userInput.toLowerCase().includes('comment appliquer une classe css à un élément html')) {
+                botResponse = 'Pour appliquer une classe CSS à un élément HTML, utilisez l\'attribut class dans votre balise HTML et définissez la classe dans votre fichier CSS, comme ceci : <div class="maClasse"></div> avec .maClasse { /* styles */ } dans le CSS.';
+            } else if (userInput.toLowerCase().includes('comment centrer un élément avec css')) {
+                botResponse = 'Pour centrer un élément avec CSS, vous pouvez utiliser la propriété margin avec la valeur auto pour centrer horizontalement, comme ceci : .element { margin: 0 auto; } et pour centrer verticalement, utilisez display: flex et align-items: center.';
+            } else if (userInput.toLowerCase().includes('comment créer une animation en css')) {
+                botResponse = 'Pour créer une animation en CSS, utilisez les règles @keyframes pour définir les étapes de l\'animation et appliquez cette animation à un élément avec la propriété animation, comme ceci : @keyframes nomAnimation { 0% { ... } 100% { ... } } .element { animation: nomAnimation 2s infinite; }';
+            }
+
+            addMessage('Bot', botResponse);
+        }
+
+        document.getElementById('menu-toggle').addEventListener('click', function () {
+            document.getElementById('menu').classList.toggle('show');
+        });
+
+        document.getElementById('accept-cookies').addEventListener('click', function () {
+            document.getElementById('cookie-banner').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
